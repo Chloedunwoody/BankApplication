@@ -23,9 +23,10 @@ namespace BankApplication
 
         enum status
         { 
-            active,
-            inactive
+            inactive,
+            active
         }
+        //Methods
 
         public Account(double balance, double interest)
         {
@@ -33,9 +34,21 @@ namespace BankApplication
             annualInterestRate = interest;
         }
 
-        //Monthlyinterest property
-        public double MonthlyInterestRate => annualInterestRate / 12; 
+        public void MakeWithdrawl(double amount)
+        {
+            _currentBalance -= amount; //depends on if set method is allowed
+            numOfWithdrawls += 1;
+        }        
 
+        public void MakeDeposit(double amount)
+        {
+            _currentBalance += amount; //depends on if set method is allowed
+            numOfDeposits += 1;
+
+        }
+
+        //Monthlyinterest property
+        public double MonthlyInterestRate => annualInterestRate / 12;
         public void CalculateInterest()
         {
             monthlyInterestTotal = MonthlyInterestRate * _currentBalance;
@@ -46,27 +59,17 @@ namespace BankApplication
         {
             _currentBalance -= serviceCharge;
             CalculateInterest();
+
             numOfDeposits = 0; //verify if possible to = 0
             numOfWithdrawls = 0;
             serviceCharge = 0;
 
-           //TODO Display previous balance and new balance after ^
-           //percentage change from starting and current balances
+            //TODO Display previous balance and new balance after ^
+            //percentage change from starting and current balances
 
             //consolewrite calculate interest
         }
 
-        public void MakeDeposit(double amount)
-        {
-            _currentBalance += amount; //depends on if set method is allowed
-            numOfDeposits += 1;
 
-        }
-
-        public void MakeWithdrawl(double amount)
-        {
-            _currentBalance -= amount; //depends on if set method is allowed
-            numOfWithdrawls += 1;
-        }
     }
 }

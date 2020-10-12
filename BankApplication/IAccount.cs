@@ -11,6 +11,6 @@ namespace BankApplication
         void MakeWithdrawl(double amount);
         void MakeDeposit(double amount);
         void CalculateInterest();
-        void CloseAndRepport();
+        string CloseAndRepport();
     }
 }

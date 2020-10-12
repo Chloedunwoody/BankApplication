@@ -8,9 +8,10 @@ namespace BankApplication
 {
     class GlobalSavingsAccount : Savings, IExchangeable
     {
+        
         public double USValue(double rate)
         {
-            _currentBalance = _currentBalance* rate;
+            _currentBalance *= rate;
 
             return _currentBalance;
         }
