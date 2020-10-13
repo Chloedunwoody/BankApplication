@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace BankApplication
 {
     class Chequing : Account
-    { 
+    {
+        public Chequing(double balance, double interest) : base(balance, interest)
+        { 
+            //this sucks, ik
+        }
         public void makeWithdrawl(double amount)
         {
             double result;
