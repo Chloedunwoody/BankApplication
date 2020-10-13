@@ -7,22 +7,32 @@ using System.Threading.Tasks;
 namespace BankApplication
 {
     class Chequing : Account
-    {
-        public override void makeWithdrawl(double amount)
+    { 
+        public void makeWithdrawl(double amount)
         {
-            
-            base.MakeWithdrawl(amount);
+            double result;
+            double serviceCharge = 15;
 
+            result = _currentBalance - amount;
+
+            if (result < 0)
+            {
+                _currentBalance -= serviceCharge;
+            }
+            else
+                _currentBalance -= amount;
         }
 
-        public void makeDeposit()
+            public void makeDeposit(double amount)
         {
-            base.MakeDeposit();
+            base.MakeDeposit(amount);
         }
 
-        public override void closeAndRepport()
+        public string closeAndRepport()
         {
-
+            return base.CloseAndRepport();
         }
+
+        
     }
 }

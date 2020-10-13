@@ -10,8 +10,8 @@ namespace BankApplication
     abstract class Account : IAccount
     {
         //will figure out the visibility later on.
-        public double _startingBalance { get; }
-        public double _currentBalance { set;  get; } //check if allowed to use set method
+        public double _startingBalance { set; get; }
+        public double _currentBalance { set; get; }
 
         double totalOfDeposits;
         int numOfDeposits;
@@ -21,26 +21,29 @@ namespace BankApplication
         double serviceCharge;
         private double monthlyInterestTotal;
 
-        enum status
+        public enum status
         { 
             inactive,
             active
         }
+
+
         //Methods
 
         public Account(double balance, double interest)
         {
-            _startingBalance = balance; 
+            _startingBalance = balance;
+            _currentBalance = balance;
             annualInterestRate = interest;
         }
 
-        public void MakeWithdrawl(double amount)
+        public virtual  void MakeWithdrawl(double amount)
         {
             _currentBalance -= amount; //depends on if set method is allowed
             numOfWithdrawls += 1;
         }        
 
-        public void MakeDeposit(double amount)
+        public virtual void MakeDeposit(double amount)
         {
             _currentBalance += amount; //depends on if set method is allowed
             numOfDeposits += 1;
@@ -49,13 +52,13 @@ namespace BankApplication
 
         //Monthlyinterest property
         public double MonthlyInterestRate => annualInterestRate / 12;
-        public void CalculateInterest()
+        public virtual void CalculateInterest()
         {
             monthlyInterestTotal = MonthlyInterestRate * _currentBalance;
             _currentBalance += monthlyInterestTotal;
         }
 
-        public void CloseAndRepport()
+        public virtual string CloseAndRepport()
         {
             _currentBalance -= serviceCharge;
             CalculateInterest();
@@ -64,10 +67,21 @@ namespace BankApplication
             numOfWithdrawls = 0;
             serviceCharge = 0;
 
-            //TODO Display previous balance and new balance after ^
-            //percentage change from starting and current balances
+            StringBuilder report = new StringBuilder();
+            report.Append("Previous Blance: " + _startingBalance);
+            report.AppendLine("New Balance: " + _currentBalance);
 
-            //consolewrite calculate interest
+            double change = (_startingBalance * _currentBalance) * 100;
+            report.AppendLine("Percentage of change: " + change);
+
+            //Calculate interest details, maybe use ToSTRING??
+            report.AppendLine("Monthly interest Rate: " + MonthlyInterestRate);
+            report.AppendLine("Monthly interest Earned: " + monthlyInterestTotal );
+            report.AppendLine("Balance + Interest: " + _currentBalance);
+
+            return report.ToString();
+
+       
         }
 
 
