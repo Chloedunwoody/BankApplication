@@ -13,6 +13,19 @@ namespace BankApplication
         {
             this.CurrentBalance = balance;
         }
+        public override void MakeDeposit(double amount)
+        {
+            this.CurrentBalance += amount; //depends on if set method is allowed
+            numOfDeposits += 1;
+            totalOfDeposits += amount;
+        }
+
+        public override void MakeWithdrawl(double amount)
+        {
+            this.CurrentBalance -= amount; //depends on if set method is allowed
+            numOfWithdrawls += 1;
+            totalOfWithdrawls += amount;
+        }
 
 
         public double USValue(double rate)
