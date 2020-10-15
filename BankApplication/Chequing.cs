@@ -8,33 +8,61 @@ namespace BankApplication
 {
     class Chequing : Account
     {
-        public Chequing(double balance, double interest) : base(balance, interest)
-        { 
-            //this sucks, ik
-        }
-        public void makeWithdrawl(double amount)
+
+        public Chequing(double balance, double interest): base(balance, interest)
         {
-            double result;
-            double serviceCharge = 15;
-
-            result = _currentBalance - amount;
-
-            if (result < 0)
+            this.CurrentBalance = CurrentBalance;
+        }
+        public override void MakeWithdrawl(double amount)
+        {
+            if ((this.CurrentBalance - amount) < 0)
             {
-                _currentBalance -= serviceCharge;
+                this.CurrentBalance -= 15;
+                Console.WriteLine("Refused! Insucifient Funds");
             }
             else
-                _currentBalance -= amount;
+                base.MakeWithdrawl(amount);
         }
 
-            public void makeDeposit(double amount)
+        public override void MakeDeposit(double amount)
         {
-            base.MakeDeposit(amount);
+            base.MakeDeposit(amount); 
+            //might not need to declare the method ??
         }
 
-        public string closeAndRepport()
+        //Monthlyinterest property
+        public double MonthlyInterestRate => annualInterestRate / 12;
+        public override void CalculateInterest()
         {
-            return base.CloseAndRepport();
+            monthlyInterestTotal = MonthlyInterestRate * this.CurrentBalance;
+            this.CurrentBalance += monthlyInterestTotal;
+        }
+
+        public override string CloseAndReport()
+        {
+            this.serviceCharge += 5;
+            this.serviceCharge += (0.10 * numOfWithdrawls);
+
+            this.CurrentBalance -= serviceCharge;
+            CalculateInterest();
+
+            numOfDeposits = 0; //verify if possible to = 0
+            numOfWithdrawls = 0;
+            serviceCharge = 0;
+
+            StringBuilder report = new StringBuilder();
+            report.Append("Previous Blance: " + this.StartingBalance);
+            report.AppendLine("New Balance: " + this.CurrentBalance);
+
+            double change = (this.StartingBalance * this.CurrentBalance) * 100;
+            report.AppendLine("Percentage of change: " + change);
+
+            //Calculate interest details, maybe use ToSTRING??
+            report.AppendLine("Monthly interest Rate: " + MonthlyInterestRate);
+            report.AppendLine("Monthly interest Earned: " + monthlyInterestTotal);
+            report.AppendLine("Balance + Interest: " + this.CurrentBalance);
+
+            return report.ToString();
         }
 
         

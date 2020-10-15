@@ -9,81 +9,63 @@ namespace BankApplication
 {
     abstract class Account : IAccount
     {
-        //will figure out the visibility later on.
-        public double _startingBalance { set; get; }
-        public double _currentBalance { set; get; }
+        //will figure out the visibility later on. !!!!
+        public double StartingBalance { get; }
+        protected internal double CurrentBalance { set; get; }
 
-        double totalOfDeposits;
-        int numOfDeposits;
-        double totalOfWithdrawls;
-        int numOfWithdrawls;
-        double annualInterestRate;
-        double serviceCharge;
-        private double monthlyInterestTotal;
+        protected Status stat { set; get; }
 
-        public enum status
-        { 
+        protected double totalOfDeposits;
+        protected int numOfDeposits =0;
+        protected double totalOfWithdrawls;
+        protected int numOfWithdrawls =0;
+        protected double annualInterestRate;
+        protected double serviceCharge;
+        protected double monthlyInterestTotal;
+
+        protected enum Status
+        {
             inactive,
             active
         }
 
-
-        //Methods
-
         public Account(double balance, double interest)
         {
-            _startingBalance = balance;
-            _currentBalance = balance;
-            annualInterestRate = interest;
+            this.StartingBalance = balance;
+            this.CurrentBalance = balance;
+            this.annualInterestRate = interest;
+
         }
 
-        public virtual  void MakeWithdrawl(double amount)
+        public virtual void MakeDeposit(double amount) 
         {
-            _currentBalance -= amount; //depends on if set method is allowed
-            numOfWithdrawls += 1;
-        }        
-
-        public virtual void MakeDeposit(double amount)
-        {
-            _currentBalance += amount; //depends on if set method is allowed
+            this.CurrentBalance += amount; //depends on if set method is allowed
             numOfDeposits += 1;
-
+            totalOfDeposits += amount;
         }
 
-        //Monthlyinterest property
-        public double MonthlyInterestRate => annualInterestRate / 12;
+        public virtual void MakeWithdrawl(double amount)
+        {
+            this.CurrentBalance -= amount; //depends on if set method is allowed
+            numOfWithdrawls += 1;
+            totalOfWithdrawls += amount;
+        }
+
         public virtual void CalculateInterest()
         {
-            monthlyInterestTotal = MonthlyInterestRate * _currentBalance;
-            _currentBalance += monthlyInterestTotal;
+            var monthlyInterestRate = (this.annualInterestRate / 12);
+            var monthlyInterest = this.CurrentBalance * monthlyInterestRate;
+            this.CurrentBalance += monthlyInterest;
+            //to revisit
         }
 
-        public virtual string CloseAndRepport()
-        {
-            _currentBalance -= serviceCharge;
-            CalculateInterest();
+        public abstract string CloseAndReport();
 
-            numOfDeposits = 0; //verify if possible to = 0
-            numOfWithdrawls = 0;
-            serviceCharge = 0;
 
-            StringBuilder report = new StringBuilder();
-            report.Append("Previous Blance: " + _startingBalance);
-            report.AppendLine("New Balance: " + _currentBalance);
-
-            double change = (_startingBalance * _currentBalance) * 100;
-            report.AppendLine("Percentage of change: " + change);
-
-            //Calculate interest details, maybe use ToSTRING??
-            report.AppendLine("Monthly interest Rate: " + MonthlyInterestRate);
-            report.AppendLine("Monthly interest Earned: " + monthlyInterestTotal );
-            report.AppendLine("Balance + Interest: " + _currentBalance);
-
-            return report.ToString();
-
-       
-        }
 
 
     }
+
+
+    
 }

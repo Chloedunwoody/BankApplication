@@ -9,12 +9,17 @@ namespace BankApplication
 {
     class GlobalSavingsAccount : Savings, IExchangeable
     {
-        
+        public GlobalSavingsAccount(double balance, double interest) : base(balance, interest)
+        {
+            this.CurrentBalance = balance;
+        }
+
+
         public double USValue(double rate)
         {
-            _currentBalance *= rate;
+            this.CurrentBalance *= rate;
 
-            return _currentBalance;
+            return this.CurrentBalance;
         }
     }
 }
