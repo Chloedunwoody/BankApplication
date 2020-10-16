@@ -11,114 +11,168 @@ namespace BankApplication
     {
         static void Main(string[] args)
         {
-            try
-            {
-                do
-                {
-                    MainMenu();
+            Savings savingAcc = new Savings(5.00, 0);
+            Chequing checkingAcc = new Chequing(5.00, 0);
+            GlobalSavingsAccount globalSavingsAcc = new GlobalSavingsAccount(5.00, 0);
 
-                    switch (Console.ReadLine().ToUpper())
+            bool stayLoop = true;
+
+            Console.WriteLine("Welcome to the Bank of COVID\n");
+
+            while (stayLoop) 
+            {
+                try
+                { 
+                    MainMenu();
+                    string userMenuChoice = Console.ReadLine().ToUpper();
+
+                    switch (userMenuChoice)
                     {
                         case "A":
-                            SavingsMenu();
+                            SavingsMenu(savingAcc);
                             break;
                         case "B":
-                            ChequingMenu();
+                            ChequingMenu(checkingAcc);
                             break;
                         case "C":
-                            GlobalSavingsMenu();
+                            GlobalSavingsMenu(globalSavingsAcc);
                             break;
                         case "Q":
+                            stayLoop = false;
                             Environment.Exit(0);
                             break;
+                        default:
+                            throw new ChoiceException(String.Format("\n{0} is not a listed choice\n", userMenuChoice));
+                            break;
                     }
-                    
-
 
                 }
-                while ();
+                catch (ChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("The program will be terminated. Due to " + ex.Message);
+                }
+                finally
+                {
 
-
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine("The program will be terminated. Due to " + ex.Message);
-            }
-
-            finally
-            {
-
+                }
             }
         }
 
         private static void MainMenu()
         {
-            Console.WriteLine("Welcome to the Bank of COVID\n" +
-                        " Please make a selection from the following\n" +
-                        "Bank Menu\n" +
-                        "-------------" +
-                        "A: Savings\n" +
-                        "B: Checking\n" +
-                        "C: GlobalSavings\n" +
-                        "Q: Exit\n");
+            Console.WriteLine("Please make a selection from the following\n" +
+                              "Bank Menu\n" +
+                              "-------------\n" +
+                              "A: Savings\n" +
+                              "B: Checking\n" +
+                              "C: GlobalSavings\n" +
+                              "Q: Exit\n");
         }
 
-        private static void SavingsMenu()
+        private static void SavingsMenu(Savings savings)
         {
-            Console.WriteLine("Savings Menu\n" +
-                           "-------------------" +
+            double userNumberImput;
+            bool stayLoop = true;
+
+            while (stayLoop)
+            {
+                Console.WriteLine("\nSavings Menu\n" +
+                           "-------------------\n" +
+                           "A: Deposit\n" +
+                           "B: Withdrawl\n" +
+                           "C: Close + Report\n" +
+                           "R: Return to Bank Menu\n");
+            
+                string userMenuChoice = Console.ReadLine().ToUpper();
+                try
+                {
+                    switch (userMenuChoice)
+                    {
+                        case "A":
+                            userNumberImput = getUserInputNumber("deposit");
+                            savings.MakeDeposit(userNumberImput);
+                            break;
+                        case "B":
+                            userNumberImput = getUserInputNumber("withdrawl");
+                            savings.MakeWithdrawl(userNumberImput);
+                            break;
+                        case "C":
+                            savings.CloseAndReport();
+                            break;
+                        case "R":
+                            stayLoop = false; 
+                            break;
+                        default:
+                            throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
+                            break;
+
+                    }
+
+                }
+                catch (ChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+        private static void ChequingMenu(Chequing chequing)
+        {
+            double userNumberImput;
+            bool stayLoop = true;
+
+            while (stayLoop)
+            {
+                Console.WriteLine("\nChequing Menu\n" +
+                           "--------------------\n" +
                            "A: Deposit\n" +
                            "B: Withdrawl\n" +
                            "C: Close + Report\n" +
                            "R: Return to Bank Menu\n");
 
-            switch (Console.ReadLine().ToUpper())
-            {
-                case "A":
-                    Savings.MakeDeposit();
-                    break;
-                case "B":
-                    Savings.MakeWithdrawl();
-                    break;
-                case "C":
-                    Savings.CloseAndReport();
-                    break;
-                case "R":
-                    MainMenu();
-                    break;
+            
+                string userMenuChoice = Console.ReadLine().ToUpper();
+                try
+                {
+                    switch (userMenuChoice)
+                    {
+                        case "A":
+                            userNumberImput = getUserInputNumber("deposit");
+                            chequing.MakeDeposit(userNumberImput);
+                            break;
+                        case "B":
+                            userNumberImput = getUserInputNumber("withdrawl");
+                            chequing.MakeWithdrawl(userNumberImput);
+                            break;
+                        case "C":
+                            chequing.CloseAndReport();
+                            break;
+                        case "R":
+                            stayLoop = false;
+                            break;
+                        default:
+                            throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
+                            break;
 
+                    }
+                }
+                catch (ChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
-        private static void ChequingMenu()
+        private static void GlobalSavingsMenu(GlobalSavingsAccount globalSavings)
         {
-            Console.WriteLine("Chequing Menu\n" +
-                           "--------------------" +
-                           "A: Deposit\n" +
-                           "B: Withdrawl\n" +
-                           "C: Close + Report\n" +
-                           "R: Return to Bank Menu\n");
+            double userNumberImput;
+            bool stayLoop = true;
 
-            switch (Console.ReadLine().ToUpper())
+            while (stayLoop)
             {
-                case "A":
-                    Chequing.MakeDeposit();
-                    break;
-                case "B":
-                    Chequing.MakeWithdrawl();
-                    break;
-                case "C":
-                    Chequing.CloseAndReport();
-                    break;
-                case "R":
-                    MainMenu();
-                    break;
-
-            }
-        }
-        private static void GlobalSavingsMenu()
-        {
-            Console.WriteLine("Global Savings Menu\n" +
+                Console.WriteLine("\nGlobal Savings Menu\n" +
                             "-----------------------" +
                             "A: Deposit\n" +
                             "B: Withdrawl\n" +
@@ -126,28 +180,73 @@ namespace BankApplication
                             "D: Report Balance in USD\n" +
                             "R: Return to Bank Menu\n");
 
-            switch (Console.ReadLine().ToUpper())
-            {
-                case "A":
-                    GlobalSavingsAccount.MakeDeposit();
-                    break;
-                case "B":
-                    GlobalSavingsAccount.MakeWithdrawl();
-                    break;
-                case "C":
-                    GlobalSavingsAccount.CloseAndReport();
-                    break;
-                case "D":
-                    GlobalSavingsAccount.BalanceinUSD();
-                    break;
-                case "R":
-                    MainMenu();
-                    break;
+            
+                string userMenuChoice = Console.ReadLine().ToUpper();
+                try
+                {
+                    switch (Console.ReadLine().ToUpper())
+                    {
+                        case "A":
+                            userNumberImput = getUserInputNumber("deposit");
+                            globalSavings.MakeDeposit(userNumberImput);
+                            break;
+                        case "B":
+                            userNumberImput = getUserInputNumber("withdrawl");
+                            globalSavings.MakeWithdrawl(userNumberImput);
+                            break;
+                        case "C":
+                            globalSavings.CloseAndReport();
+                            break;
+                        case "D":
 
+                            globalSavings.USValue(0.755770);
+                            break;
+                        case "R":
+                            stayLoop = false;
+                            break;
+                        default:
+                            throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
+                            break;
+
+                    }
+                }
+                catch (ChoiceException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-           
         }
 
-        
+        public static double getUserInputNumber(string message)
+        {
+            double input = 0;
+            bool correctNumberInput = false;
+            while (correctNumberInput == false)
+            {
+                try
+                {
+                    input = 0;
+
+                    Console.WriteLine("Enter number you wish to {0}", message);
+
+                    input = double.Parse(Console.ReadLine());
+
+                    if (input < 0)
+                    {
+                        throw new Exception("Invalid Number");
+                    }
+
+                    correctNumberInput = true;
+                    
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                
+            }
+            return input;
+        }
     }
 }

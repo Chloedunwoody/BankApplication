@@ -60,10 +60,6 @@ namespace BankApplication
         }
 
         public abstract string CloseAndReport();
-
-
-
-
     }
 
 
