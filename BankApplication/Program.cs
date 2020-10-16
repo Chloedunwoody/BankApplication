@@ -43,7 +43,6 @@ namespace BankApplication
                             break;
                         default:
                             throw new ChoiceException(String.Format("\n{0} is not a listed choice\n", userMenuChoice));
-                            break;
                     }
 
                 }
@@ -101,14 +100,13 @@ namespace BankApplication
                             savings.MakeWithdrawl(userNumberImput);
                             break;
                         case "C":
-                            savings.CloseAndReport();
+                            Console.WriteLine(savings.CloseAndReport());
                             break;
                         case "R":
                             stayLoop = false; 
                             break;
                         default:
                             throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
-                            break;
 
                     }
 
@@ -148,14 +146,13 @@ namespace BankApplication
                             chequing.MakeWithdrawl(userNumberImput);
                             break;
                         case "C":
-                            chequing.CloseAndReport();
+                            Console.WriteLine(chequing.CloseAndReport());
                             break;
                         case "R":
                             stayLoop = false;
                             break;
                         default:
                             throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
-                            break;
 
                     }
                 }
@@ -173,7 +170,7 @@ namespace BankApplication
             while (stayLoop)
             {
                 Console.WriteLine("\nGlobal Savings Menu\n" +
-                            "-----------------------" +
+                            "-----------------------\n" +
                             "A: Deposit\n" +
                             "B: Withdrawl\n" +
                             "C: Close + Report\n" +
@@ -195,7 +192,7 @@ namespace BankApplication
                             globalSavings.MakeWithdrawl(userNumberImput);
                             break;
                         case "C":
-                            globalSavings.CloseAndReport();
+                            Console.WriteLine(globalSavings.CloseAndReport());
                             break;
                         case "D":
 
@@ -206,7 +203,6 @@ namespace BankApplication
                             break;
                         default:
                             throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
-                            break;
 
                     }
                 }

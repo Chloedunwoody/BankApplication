@@ -22,17 +22,17 @@ namespace BankApplication
             }
             else
             {
-                this.CurrentBalance += amount;
-                numOfDeposits += 1;
-                totalOfDeposits += amount;
+                this.CurrentBalance -= amount;
+                numOfWithdrawls += 1;
+                totalOfWithdrawls += amount;
             }
         }
 
         public override void MakeDeposit(double amount)
         {
-            this.CurrentBalance -= amount; //depends on if set method is allowed
-            numOfWithdrawls += 1;
-            totalOfWithdrawls += amount;
+            this.CurrentBalance += amount; 
+            numOfDeposits += 1;
+            totalOfDeposits += amount;
         }
 
         //Monthlyinterest property
@@ -55,20 +55,20 @@ namespace BankApplication
             this.CurrentBalance -= serviceCharge;
             CalculateInterest();
 
-            numOfDeposits = 0; //verify if possible to = 0
+            numOfDeposits = 0;
             numOfWithdrawls = 0;
             serviceCharge = 0;
 
             StringBuilder report = new StringBuilder();
-            report.Append("Previous Blance: " + this.StartingBalance);
+            report.AppendLine("Previous Blance: " + this.StartingBalance);
             report.AppendLine("New Balance: " + this.CurrentBalance);
 
-            double change = (this.StartingBalance * this.CurrentBalance) * 100;
+            double change = ((this.CurrentBalance - this.StartingBalance)/this.StartingBalance) *100;
             report.AppendLine("Percentage of change: " + change);
 
             //Calculate interest details, maybe use ToSTRING??
-            report.AppendLine("Monthly interest Rate: " + MonthlyInterestRate);
-            report.AppendLine("Monthly interest Earned: " + monthlyInterestTotal);
+            report.AppendLine("Monthly interest Rate: " + this.MonthlyInterestRate);
+            report.AppendLine("Monthly interest Earned: " + this.monthlyInterestTotal);
             report.AppendLine("Balance + Interest: " + this.CurrentBalance);
 
             return report.ToString();
