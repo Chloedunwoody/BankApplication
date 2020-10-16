@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BankApplication
 {
-    abstract class Account : IAccount
+    abstract class Account : Extensions, IAccount
     {
-        //will figure out the visibility later on. !!!!
         public double StartingBalance { get; }
         protected internal double CurrentBalance { set; get; }
 
@@ -21,7 +20,8 @@ namespace BankApplication
         protected int numOfWithdrawls =0;
         protected double annualInterestRate;
         protected double serviceCharge;
-        protected double monthlyInterestTotal;
+        protected double monthlyInterestRate;
+        protected double monthlyInterest;
 
         protected enum Status
         {
@@ -41,6 +41,8 @@ namespace BankApplication
         public abstract void MakeWithdrawl(double amount);
         public abstract void CalculateInterest();
         public abstract string CloseAndReport();
+
+        public abstract double getPercentageChange();
     }
 
 

@@ -13,57 +13,19 @@ namespace BankApplication
         {
             this.CurrentBalance = balance;
         }
-        public override void MakeDeposit(double amount)
-        {
-            base.MakeDeposit(amount);
-        }
+        public override void MakeDeposit(double amount) => base.MakeDeposit(amount);
 
-        public override void MakeWithdrawl(double amount)
-        {
-            base.MakeWithdrawl(amount);
-        }
-        public double MonthlyInterestRate => annualInterestRate / 12;
-        public override void CalculateInterest()
-        {
-            monthlyInterestTotal = MonthlyInterestRate * this.CurrentBalance;
-            this.CurrentBalance += monthlyInterestTotal;
-        }
-        public override string CloseAndReport()
-        {
-            int serviceCharge = 0;
-            while (numOfWithdrawls > 4)
-            {
-                serviceCharge += 1;
-                numOfWithdrawls -= 1;
-            }
+        public override void MakeWithdrawl(double amount) => base.MakeWithdrawl(amount);
 
-            this.CurrentBalance -= serviceCharge;
-            CalculateInterest();
+        public override void CalculateInterest() => base.CalculateInterest();
 
-            numOfDeposits = 0;
-            numOfWithdrawls = 0;
-            serviceCharge = 0;
+        public override string CloseAndReport() => base.CloseAndReport();
 
-            StringBuilder report = new StringBuilder();
-            report.AppendLine("Previous Blance: " + this.StartingBalance);
-            report.AppendLine("New Balance: " + this.CurrentBalance);
-
-            double change = ((this.CurrentBalance - this.StartingBalance) / this.StartingBalance) * 100;
-            report.AppendLine("Percentage of change: " + change);
-
-            //Calculate interest details, maybe use ToSTRING??
-            report.AppendLine("Monthly interest Rate: " + this.MonthlyInterestRate);
-            report.AppendLine("Monthly interest Earned: " + this.monthlyInterestTotal);
-            report.AppendLine("Balance + Interest: " + this.CurrentBalance);
-
-            return report.ToString();
-        }
-    
         public double USValue(double rate)
         {
-            this.CurrentBalance *= rate;
+            CurrentBalance *= rate;
 
-            return this.CurrentBalance;
+            return CurrentBalance;
         }
     }
 }

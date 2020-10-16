@@ -12,7 +12,7 @@ namespace BankApplication
         static void Main(string[] args)
         {
             Savings savingAcc = new Savings(5.00, 0);
-            Chequing checkingAcc = new Chequing(5.00, 0);
+            Chequing checkingAcc = new Chequing(5.00, 5);
             GlobalSavingsAccount globalSavingsAcc = new GlobalSavingsAccount(5.00, 0);
 
             bool stayLoop = true;
@@ -162,6 +162,8 @@ namespace BankApplication
                 }
             }
         }
+
+        //Choices dont work in GlobalSavings 
         private static void GlobalSavingsMenu(GlobalSavingsAccount globalSavings)
         {
             double userNumberImput;
@@ -195,15 +197,13 @@ namespace BankApplication
                             Console.WriteLine(globalSavings.CloseAndReport());
                             break;
                         case "D":
-
-                            globalSavings.USValue(0.755770);
+                            Console.WriteLine((String.Format("USD: {0:C}",globalSavings.USValue(0.755770))));
                             break;
                         case "R":
                             stayLoop = false;
                             break;
                         default:
                             throw new ChoiceException(String.Format("{0} is not a listed choice", userMenuChoice));
-
                     }
                 }
                 catch (ChoiceException ex)

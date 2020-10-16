@@ -30,20 +30,18 @@ namespace BankApplication
             }
             else
             {
-                this.CurrentBalance -= amount;
+                CurrentBalance -= amount;
                 numOfWithdrawls += 1;
                 totalOfWithdrawls += amount;
             }
-
-
         }
 
         public override void MakeDeposit(double amount)
         {
             if ((Stat == Status.inactive) && ((CurrentBalance + amount) > 25))
             {
-                this.Stat = Status.active;
-                this.CurrentBalance += amount; 
+                Stat = Status.active;
+                CurrentBalance += amount; 
                 numOfDeposits += 1;
                 totalOfDeposits += amount;
             }
@@ -53,39 +51,43 @@ namespace BankApplication
             }
         }
 
-        public double MonthlyInterestRate => annualInterestRate / 12;
         public override void CalculateInterest()
         {
-            monthlyInterestTotal = MonthlyInterestRate * this.CurrentBalance;
-            this.CurrentBalance += monthlyInterestTotal;
+            monthlyInterestRate = (annualInterestRate / 100) / 12;
+            monthlyInterest = (CurrentBalance * monthlyInterestRate) * 100;
+            CurrentBalance += monthlyInterest;
+
         }
+
         public override string CloseAndReport()
         {
-            int serviceCharge = 0;
-            while (numOfWithdrawls > 4)
+            if (numOfWithdrawls > 4)
             {
-                serviceCharge += 1;
-                numOfWithdrawls -= 1;
+                serviceCharge += 1 * numOfWithdrawls;
+                CurrentBalance -= serviceCharge;
             }
-
-            this.CurrentBalance -= serviceCharge;
+            else
+            {
+                CurrentBalance -= serviceCharge;
+            }
             CalculateInterest();
 
-            numOfDeposits = 0; //verify if possible to = 0
+            StringBuilder report = new StringBuilder();
+            report.AppendLine(String.Format("Previous Blance: {0:C}", StartingBalance));
+            report.AppendLine(String.Format("New Balance: {0:C}", CurrentBalance));
+            report.AppendLine(String.Format("Service Charge: {0:C}", serviceCharge));
+            //How differenciate between pre adding interest currentbalance and post adding interest
+
+            double change = (CurrentBalance - StartingBalance) / CurrentBalance;
+            report.AppendLine(String.Format("Percentage of change: {0:P2}", change));
+            report.AppendLine(String.Format("Monthly Interest Rate: {0:P2}", monthlyInterestRate));
+            report.AppendLine(String.Format("Monthly interest Earned: {0:C}", monthlyInterest));
+            report.AppendLine(String.Format("Balance + Interest: {0:C}", CurrentBalance));
+            //How differenciate between pre adding interest currentbalance and post adding interest
+
+            numOfDeposits = 0;
             numOfWithdrawls = 0;
             serviceCharge = 0;
-
-            StringBuilder report = new StringBuilder();
-            report.AppendLine("Previous Blance: " + this.StartingBalance);
-            report.AppendLine("New Balance: " + this.CurrentBalance);
-
-            double change = ((this.CurrentBalance - this.StartingBalance) / this.StartingBalance) * 100;
-            report.AppendLine("Percentage of change: " + change);
-
-            //Calculate interest details, maybe use ToSTRING??
-            report.AppendLine("Monthly interest Rate: " + this.MonthlyInterestRate);
-            report.AppendLine("Monthly interest Earned: " + this.monthlyInterestTotal);
-            report.AppendLine("Balance + Interest: " + this.CurrentBalance);
 
             return report.ToString();
         }
