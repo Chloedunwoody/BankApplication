@@ -21,19 +21,28 @@ namespace BankApplication
                 Console.WriteLine("Refused! Insucifient Funds");
             }
             else
-                base.MakeWithdrawl(amount);
+            {
+                this.CurrentBalance += amount;
+                numOfDeposits += 1;
+                totalOfDeposits += amount;
+            }
         }
 
         public override void MakeDeposit(double amount)
         {
-            base.MakeDeposit(amount); 
-            //might not need to declare the method ??
+            this.CurrentBalance -= amount; //depends on if set method is allowed
+            numOfWithdrawls += 1;
+            totalOfWithdrawls += amount;
         }
 
         //Monthlyinterest property
         public double MonthlyInterestRate => annualInterestRate / 12;
         public override void CalculateInterest()
         {
+            //TO REVISIT
+            var monthlyInterestRate = (this.annualInterestRate / 12);
+            var monthlyInterest = this.CurrentBalance * monthlyInterestRate;
+            this.CurrentBalance += monthlyInterest;
             monthlyInterestTotal = MonthlyInterestRate * this.CurrentBalance;
             this.CurrentBalance += monthlyInterestTotal;
         }

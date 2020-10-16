@@ -13,7 +13,7 @@ namespace BankApplication
         public double StartingBalance { get; }
         protected internal double CurrentBalance { set; get; }
 
-        protected Status stat { set; get; }
+        protected Status Stat { set; get; }
 
         protected double totalOfDeposits;
         protected int numOfDeposits =0;
@@ -29,7 +29,7 @@ namespace BankApplication
             active
         }
 
-        public Account(double balance, double interest)
+        protected Account(double balance, double interest)
         {
             this.StartingBalance = balance;
             this.CurrentBalance = balance;
@@ -37,28 +37,9 @@ namespace BankApplication
 
         }
 
-        public virtual void MakeDeposit(double amount) 
-        {
-            this.CurrentBalance += amount; //depends on if set method is allowed
-            numOfDeposits += 1;
-            totalOfDeposits += amount;
-        }
-
-        public virtual void MakeWithdrawl(double amount)
-        {
-            this.CurrentBalance -= amount; //depends on if set method is allowed
-            numOfWithdrawls += 1;
-            totalOfWithdrawls += amount;
-        }
-
-        public virtual void CalculateInterest()
-        {
-            var monthlyInterestRate = (this.annualInterestRate / 12);
-            var monthlyInterest = this.CurrentBalance * monthlyInterestRate;
-            this.CurrentBalance += monthlyInterest;
-            //to revisit
-        }
-
+        public abstract void MakeDeposit(double amount);
+        public abstract void MakeWithdrawl(double amount);
+        public abstract void CalculateInterest();
         public abstract string CloseAndReport();
     }
 

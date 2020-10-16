@@ -22,9 +22,9 @@ namespace BankApplication
 
         public override void MakeWithdrawl(double amount)
         {
-            this.CurrentBalance -= amount; //depends on if set method is allowed
-            numOfWithdrawls += 1;
-            totalOfWithdrawls += amount;
+            this.CurrentBalance += amount;
+            numOfDeposits += 1;
+            totalOfDeposits += amount;
         }
 
 

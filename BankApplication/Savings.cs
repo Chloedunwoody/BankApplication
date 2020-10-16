@@ -13,24 +13,26 @@ namespace BankApplication
         {
             if (balance < 25)
             {
-                stat = Status.inactive;
+                Stat = Status.inactive;
             }
             else
-                stat = Status.active;
+                Stat = Status.active;
 
             this.CurrentBalance = balance;
         }
 
         public override void MakeWithdrawl(double amount)
         {
-            if (stat == Status.inactive)
+            if (Stat == Status.inactive)
             {
                 Console.WriteLine("invalid entrey");
                 //throw exception
             }
             else
             {
-                base.MakeWithdrawl(amount);
+                this.CurrentBalance += amount;
+                numOfDeposits += 1;
+                totalOfDeposits += amount;
             }
 
 
@@ -38,14 +40,16 @@ namespace BankApplication
 
         public override void MakeDeposit(double amount)
         {
-            if ((stat == Status.inactive) && ((CurrentBalance + amount) > 25))
+            if ((Stat == Status.inactive) && ((CurrentBalance + amount) > 25))
             {
-                this.stat = Status.active;
-                base.MakeDeposit(amount);
+                this.Stat = Status.active;
+                this.CurrentBalance -= amount; //depends on if set method is allowed
+                numOfWithdrawls += 1;
+                totalOfWithdrawls += amount;
             }
             else
             {
-
+                return;
             }
         }
 
