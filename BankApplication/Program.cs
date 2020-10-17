@@ -11,7 +11,7 @@ namespace BankApplication
     {
         static void Main(string[] args)
         {
-            Savings savingAcc = new Savings(5.00, 0);
+            Savings savingAcc = new Savings(5.00, 5);
             Chequing checkingAcc = new Chequing(5.00, 5);
             GlobalSavingsAccount globalSavingsAcc = new GlobalSavingsAccount(5.00, 0);
 
