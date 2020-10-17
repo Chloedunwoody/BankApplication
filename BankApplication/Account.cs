@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankApplication
 {
-    abstract class Account : Extensions, IAccount
+    abstract class Account :  IAccount
     {
         public double StartingBalance { get; }
         protected internal double CurrentBalance { set; get; }
@@ -42,7 +42,7 @@ namespace BankApplication
         public abstract void CalculateInterest();
         public abstract string CloseAndReport();
 
-        public abstract double getPercentageChange();
+        //public abstract double getPercentageChange();
     }
 
 

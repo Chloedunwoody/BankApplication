@@ -46,7 +46,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="Chequing.cs" />
     <Compile Include="ChoiceException.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="GlobalSavingsAccount.cs" />
     <Compile Include="IAccount.cs" />
     <Compile Include="IExchangeable.cs" />

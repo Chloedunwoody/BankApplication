@@ -183,7 +183,7 @@ namespace BankApplication
                 string userMenuChoice = Console.ReadLine().ToUpper();
                 try
                 {
-                    switch (Console.ReadLine().ToUpper())
+                    switch (userMenuChoice)
                     {
                         case "A":
                             userNumberImput = getUserInputNumber("deposit");
@@ -229,7 +229,11 @@ namespace BankApplication
 
                     if (input < 0)
                     {
-                        throw new Exception("Invalid Number");
+                        throw new Exception("The number should be more than 0");
+                    }
+                    else if (Double.IsNaN(input))
+                    {
+                        throw new Exception("Your input should be a number");
                     }
 
                     correctNumberInput = true;

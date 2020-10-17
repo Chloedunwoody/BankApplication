@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BankApplication
 {
-    public static class Extensions :Account
+    public static class Helper
     {
-        public static double GetPercentageChange()
+        public static double GetPercentageChange(double CurrentBalance, double StartingBalance)
         {
             //To revist
             double change = (CurrentBalance - StartingBalance) / CurrentBalance;
