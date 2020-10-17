@@ -51,7 +51,7 @@ namespace BankApplication
             serviceCharge += 0.10 * numOfWithdrawls;
 
             CurrentBalance -= serviceCharge;
-            CalculateInterest();
+            
 
             StringBuilder report = new StringBuilder();
             report.AppendLine(String.Format("Previous Blance: {0:C}",StartingBalance));
@@ -61,6 +61,7 @@ namespace BankApplication
 
             //double change = (CurrentBalance - StartingBalance) / CurrentBalance;
             report.AppendLine(String.Format("Percentage of change: {0:P2}", Extension.GetPercentageChange(CurrentBalance, StartingBalance)));
+            CalculateInterest();
             report.AppendLine(String.Format("Monthly Interest Rate: {0:P2}", monthlyInterestRate));
             report.AppendLine(String.Format("Monthly interest Earned: {0:C}", monthlyInterest));
             report.AppendLine(String.Format("Balance + Interest: {0:C}", CurrentBalance));
