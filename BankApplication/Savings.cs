@@ -78,8 +78,8 @@ namespace BankApplication
             report.AppendLine(String.Format("Service Charge: {0:C}", serviceCharge));
             //How differenciate between pre adding interest currentbalance and post adding interest
 
-            double change = (CurrentBalance - StartingBalance) / CurrentBalance;
-            report.AppendLine(String.Format("Percentage of change: {0:P2}", change));
+            //double change = (CurrentBalance - StartingBalance) / CurrentBalance;
+            report.AppendLine(String.Format("Percentage of change: {0:P2}", Extension.GetPercentageChange(CurrentBalance, StartingBalance)));
             report.AppendLine(String.Format("Monthly Interest Rate: {0:P2}", monthlyInterestRate));
             report.AppendLine(String.Format("Monthly interest Earned: {0:C}", monthlyInterest));
             report.AppendLine(String.Format("Balance + Interest: {0:C}", CurrentBalance));
