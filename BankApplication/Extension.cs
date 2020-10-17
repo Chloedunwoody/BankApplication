@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankApplication
 {
-    public static class Helper
+    public static class Extension
     {
         public static double GetPercentageChange(double CurrentBalance, double StartingBalance)
         {
